@@ -1,0 +1,108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Authentication</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>User Registration</h2>
+        <form id="registerForm">
+            <div class="mb-3">
+                <label for="registerUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="registerUsername" required>
+            </div>
+            <div class="mb-3">
+                <label for="registerPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="registerPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+
+        <hr>
+
+        <h2>User Login</h2>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="loginUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="loginUsername" required>
+            </div>
+            <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-success">Login</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#registerForm').on('submit', function(event) {
+                event.preventDefault();
+                const username = $('#registerUsername').val();
+                const password = $('#registerPassword').val();
+
+                $.ajax({
+                    url: '/api/register/',  
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response) {
+                        alert('Registration successful!');
+                        console.log('Response:', response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Status:', status);
+                        console.log('Error:', error);
+                        console.log('Response Text:', xhr.responseText);
+                        let errorMessage = 'An unknown error occurred.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            errorMessage = response.error || response.detail || errorMessage;
+                        } catch (e) {
+                            errorMessage = xhr.responseText || errorMessage;
+                        }
+                        alert('Registration failed: ' + errorMessage);
+                    }
+                });
+            });
+
+            $('#loginForm').on('submit', function(event) {
+                event.preventDefault();
+                const username = $('#loginUsername').val();
+                const password = $('#loginPassword').val();
+
+                $.ajax({
+                    url: '/api/login/', 
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username: username, password: password }),
+                    success: function(response) {
+                        alert('Login successful! Access Token: ' + response.access);
+                        localStorage.setItem('accessToken', response.access);
+                        localStorage.setItem('refreshToken', response.refresh);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Status:', status);
+                        console.log('Error:', error);
+                        console.log('Response Text:', xhr.responseText);
+                        let errorMessage = 'An unknown error occurred.';
+                        try {
+                            const response = JSON.parse(xhr.responseText);
+                            errorMessage = response.detail || errorMessage;
+                        } catch (e) {
+                            errorMessage = xhr.responseText || errorMessage;
+                        }
+                        alert('Login failed: ' + errorMessage);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
