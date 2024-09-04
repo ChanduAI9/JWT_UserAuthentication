@@ -1,0 +1,106 @@
+/* Style for the entire page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container for the form */
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Heading style */
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #343a40;
+}
+
+/* Form field styling */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Button styling */
+.btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Error message styling */
+#errorMessage {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Additional padding for the form fields */
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+/* Add some margin between the forms */
+form {
+    margin-bottom: 20px;
+}
+
+/* Style for logout button */
+#logoutBtn {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#logoutBtn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+}
